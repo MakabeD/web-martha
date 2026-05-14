@@ -314,19 +314,19 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
             onClick={() => setSelectedProduct(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: 0.97 }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                transition: { duration: 0.18 },
+                transition: { duration: 0.16 },
               }}
               exit={{
                 opacity: 0,
                 scale: 0.98,
-                transition: { duration: 0.14 },
+                transition: { duration: 0.12 },
               }}
               onClick={(event) => event.stopPropagation()}
-              className="relative w-full max-w-4xl overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--panel-strong)] shadow-[0_30px_90px_rgba(7,7,5,0.22)]"
+              className="relative w-full max-w-3xl overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--panel-strong)] shadow-[0_30px_90px_rgba(7,7,5,0.22)]"
             >
               <button
                 type="button"
@@ -337,7 +337,7 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
                 <CloseIcon />
               </button>
 
-              <div className="grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+              <div className="grid lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
                 <motion.div
                   layoutId={`image-${selectedProduct.id}`}
                   className="relative aspect-[4/5] bg-[color:var(--surface-strong)]"
@@ -346,7 +346,8 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
                     src={selectedProduct.imagen}
                     alt={selectedProduct.nombre}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 34vw"
                     className="object-cover"
                   />
                 </motion.div>
