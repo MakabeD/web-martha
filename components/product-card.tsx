@@ -19,13 +19,10 @@ export default function ProductCard({
   onClick,
 }: ProductCardProps) {
   return (
-    <motion.button
+    <button
       type="button"
       onClick={onClick}
-      layoutId={`card-${id}`}
       className="group block w-full overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--panel-strong)] text-left shadow-[var(--shadow)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(7,7,5,0.12)]"
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.28, ease: "easeOut" }}
     >
       <motion.div
         layoutId={`image-${id}`}
@@ -69,6 +66,6 @@ export default function ProductCard({
           Pieza seleccionada para un catalogo visual limpio y facil de explorar.
         </p>
       </div>
-    </motion.button>
+    </button>
   );
 }

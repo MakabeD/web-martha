@@ -17,7 +17,6 @@ type CartItem = Product & {
 type SortOption = "nombre-asc" | "precio-asc" | "precio-desc" | "categoria-asc";
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "57TUNUMERO";
-console.log(WHATSAPP_NUMBER);
 const CART_STORAGE_KEY = "eliza-cart";
 
 function normalizeText(value: string) {
@@ -278,7 +277,7 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
         ) : null}
       </div>
 
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence>
         {filteredProducts.length === 0 ? (
           <section className="mt-8 rounded-[2rem] border border-dashed border-[color:var(--line-strong)] bg-[color:var(--panel-strong)] px-6 py-12 text-center shadow-[0_10px_30px_rgba(7,7,5,0.04)]">
             <h2 className="text-2xl font-semibold text-[color:var(--primary)]">
@@ -289,10 +288,7 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
             </p>
           </section>
         ) : (
-          <motion.section
-            layout
-            className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-          >
+          <section className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
@@ -304,7 +300,7 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
                 onClick={() => setSelectedProduct(product)}
               />
             ))}
-          </motion.section>
+          </section>
         )}
       </AnimatePresence>
 
@@ -318,17 +314,16 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
             onClick={() => setSelectedProduct(null)}
           >
             <motion.div
-              layoutId={`card-${selectedProduct.id}`}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                transition: { duration: 0.28 },
+                transition: { duration: 0.18 },
               }}
               exit={{
                 opacity: 0,
                 scale: 0.98,
-                transition: { duration: 0.2 },
+                transition: { duration: 0.14 },
               }}
               onClick={(event) => event.stopPropagation()}
               className="relative w-full max-w-4xl overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--panel-strong)] shadow-[0_30px_90px_rgba(7,7,5,0.22)]"
@@ -342,10 +337,10 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
                 <CloseIcon />
               </button>
 
-              <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
                 <motion.div
                   layoutId={`image-${selectedProduct.id}`}
-                  className="relative min-h-[22rem] bg-[color:var(--surface-strong)]"
+                  className="relative aspect-[4/5] bg-[color:var(--surface-strong)]"
                 >
                   <Image
                     src={selectedProduct.imagen}
@@ -356,7 +351,7 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
                   />
                 </motion.div>
 
-                <div className="flex flex-col justify-between p-6 sm:p-8">
+                <div className="flex min-w-0 flex-col justify-between p-6 sm:p-8">
                   <div>
                     <motion.p
                       layoutId={`categoria-${selectedProduct.id}`}
