@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center px-6">
@@ -5,12 +7,12 @@ export default function Home() {
         <h1 className="text-5xl font-semibold tracking-[-0.04em] text-[color:var(--primary)] sm:text-6xl">
           Catalogo de eliza
         </h1>
-        <button
-          type="button"
+        <Link
+          href="/catalogo"
           className="mt-8 rounded-full bg-[color:var(--primary)] px-8 py-3 text-base font-semibold text-[color:var(--surface)] transition hover:bg-[color:var(--ink)]"
         >
           Ver catalogo
-        </button>
+        </Link>
       </section>
     </main>
   );
