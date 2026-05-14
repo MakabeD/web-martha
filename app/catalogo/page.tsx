@@ -1,6 +1,6 @@
 import Link from "next/link";
-import ProductCard from "@/app/components/product-card";
-import { getProducts } from "@/app/lib/products";
+import ProductCard from "@/components/product-card";
+import { getProducts } from "@/lib/products";
 
 export const metadata = {
   title: "Catalogo de eliza",
