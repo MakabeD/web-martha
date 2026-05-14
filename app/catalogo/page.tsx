@@ -1,10 +1,10 @@
 import Link from "next/link";
-import ProductCard from "@/components/product-card";
+import CatalogBrowser from "@/components/catalog-browser";
 import { getProducts } from "@/lib/products";
 
 export const metadata = {
   title: "Catalogo de eliza",
-  description: "Catalogo de productos de Eliza cargado desde Google Sheets.",
+  description: ".",
 };
 
 export default async function CatalogoPage() {
@@ -21,10 +21,6 @@ export default async function CatalogoPage() {
             <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[color:var(--ink)] sm:text-5xl">
               Catalogo
             </h1>
-            <p className="mt-4 max-w-2xl text-base text-[color:var(--ink)]/74">
-              Productos con nombre, precio, categoria e imagen cargados desde
-              Google Sheets.
-            </p>
           </div>
 
           <Link
@@ -42,18 +38,7 @@ export default async function CatalogoPage() {
             entorno.
           </div>
         ) : null}
-
-        <section className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {products.map((product) => (
-            <ProductCard
-              key={`${product.nombre}-${product.precio}`}
-              nombre={product.nombre}
-              precio={product.precio}
-              categoria={product.categoria}
-              imagen={product.imagen}
-            />
-          ))}
-        </section>
+        <CatalogBrowser products={products} />
       </div>
     </main>
   );

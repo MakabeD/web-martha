@@ -95,7 +95,6 @@ function parseCsv(csvText: string) {
     const row = Object.fromEntries(
       headers.map((header, index) => [header, values[index] ?? ""]),
     );
-    console.log(line);
 
     return {
       nombre: row.nombre ?? "",
@@ -139,7 +138,7 @@ export const getProducts = cache(async () => {
 
     const csvText = await response.text();
     const products = parseCsv(csvText).filter(isValidProduct);
-    console.log(products);
+
     if (products.length === 0) {
       return {
         products: fallbackProducts,
