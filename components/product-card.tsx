@@ -1,21 +1,36 @@
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 type ProductCardProps = {
+  id: string;
   nombre: string;
   precio: string;
   categoria: string;
   imagen: string;
+  onClick: () => void;
 };
 
 export default function ProductCard({
+  id,
   nombre,
   precio,
   categoria,
   imagen,
+  onClick,
 }: ProductCardProps) {
   return (
-    <article className="group overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--panel-strong)] shadow-[var(--shadow)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(7,7,5,0.12)]">
-      <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--surface-strong)]">
+    <motion.button
+      type="button"
+      onClick={onClick}
+      layoutId={`card-${id}`}
+      className="group block w-full overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--panel-strong)] text-left shadow-[var(--shadow)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(7,7,5,0.12)]"
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.28, ease: "easeOut" }}
+    >
+      <motion.div
+        layoutId={`image-${id}`}
+        className="relative aspect-[4/5] overflow-hidden bg-[color:var(--surface-strong)]"
+      >
         <Image
           src={imagen}
           alt={nombre}
@@ -24,19 +39,28 @@ export default function ProductCard({
           className="object-cover transition duration-500 group-hover:scale-[1.03]"
         />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[rgba(7,7,5,0.2)] to-transparent" />
-      </div>
+      </motion.div>
 
       <div className="space-y-3 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[color:var(--accent)]">
+        <motion.p
+          layoutId={`categoria-${id}`}
+          className="text-xs font-semibold uppercase tracking-[0.3em] text-[color:var(--accent)]"
+        >
           {categoria}
-        </p>
-        <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--primary)]">
+        </motion.p>
+        <motion.h2
+          layoutId={`nombre-${id}`}
+          className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--primary)]"
+        >
           {nombre}
-        </h2>
+        </motion.h2>
         <div className="flex items-center justify-between gap-4">
-          <p className="text-lg font-medium text-[color:var(--ink)]">
+          <motion.p
+            layoutId={`precio-${id}`}
+            className="text-lg font-medium text-[color:var(--ink)]"
+          >
             {precio}
-          </p>
+          </motion.p>
           <span className="rounded-full bg-[color:var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--primary)]">
             Eliza
           </span>
@@ -45,6 +69,6 @@ export default function ProductCard({
           Pieza seleccionada para un catalogo visual limpio y facil de explorar.
         </p>
       </div>
-    </article>
+    </motion.button>
   );
 }

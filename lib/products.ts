@@ -1,6 +1,7 @@
 import { cache } from "react";
 
 export type Product = {
+  id: string;
   nombre: string;
   precio: string;
   categoria: string;
@@ -9,18 +10,21 @@ export type Product = {
 
 const fallbackProducts: Product[] = [
   {
+    id: "vestido-aura",
     nombre: "Vestido Aura",
     precio: "$120.000",
     categoria: "Vestidos",
     imagen: "https://res.cloudinary.com/demo/image/upload/sample.jpg",
   },
   {
+    id: "blusa-sol",
     nombre: "Blusa Sol",
     precio: "$85.000",
     categoria: "Blusas",
     imagen: "https://res.cloudinary.com/demo/image/upload/woman.jpg",
   },
   {
+    id: "conjunto-nube",
     nombre: "Conjunto Nube",
     precio: "$160.000",
     categoria: "Conjuntos",
@@ -96,17 +100,25 @@ function parseCsv(csvText: string) {
       headers.map((header, index) => [header, values[index] ?? ""]),
     );
 
+    const nombre = row.nombre ?? "";
+    const precio = row.precio ?? "";
+    const categoria = row.categoria ?? "";
+    const imagen =
+      row.imagen ??
+      row.image ??
+      row.imageurl ??
+      row.cloudinaryurl ??
+      row.cloudinary ??
+      "";
+
     return {
-      nombre: row.nombre ?? "",
-      precio: row.precio ?? "",
-      categoria: row.categoria ?? "",
-      imagen:
-        row.imagen ??
-        row.image ??
-        row.imageurl ??
-        row.cloudinaryurl ??
-        row.cloudinary ??
-        "",
+      id:
+        row.id ??
+        `${nombre}-${categoria}`.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      nombre,
+      precio,
+      categoria,
+      imagen,
     };
   });
 }
@@ -138,7 +150,6 @@ export const getProducts = cache(async () => {
 
     const csvText = await response.text();
     const products = parseCsv(csvText).filter(isValidProduct);
-    console.log(csvText);
 
     if (products.length === 0) {
       return {
