@@ -129,7 +129,7 @@ export const getProducts = cache(async () => {
 
   try {
     const response = await fetch(sheetUrl, {
-      next: { revalidate: 300 },
+      next: { revalidate: 30 },
     });
 
     if (!response.ok) {
@@ -138,6 +138,7 @@ export const getProducts = cache(async () => {
 
     const csvText = await response.text();
     const products = parseCsv(csvText).filter(isValidProduct);
+    console.log(csvText);
 
     if (products.length === 0) {
       return {

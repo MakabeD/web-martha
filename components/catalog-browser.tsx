@@ -76,9 +76,9 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
 
   return (
     <>
-      <section className="mt-10 grid gap-4 rounded-[1.75rem] border border-[color:var(--primary)]/12 bg-white/80 p-5 sm:grid-cols-2 xl:grid-cols-3">
+      <section className="mt-10 grid gap-4 rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--panel)] p-5 shadow-[var(--shadow)] backdrop-blur sm:grid-cols-2 xl:grid-cols-3">
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-[color:var(--primary)]">
+          <span className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
             Buscar
           </span>
           <input
@@ -86,18 +86,18 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Buscar por nombre"
-            className="rounded-full border border-[color:var(--primary)]/25 bg-[color:var(--surface)] px-4 py-3 text-sm text-[color:var(--ink)] outline-none transition focus:border-[color:var(--primary)]"
+            className="rounded-full border border-[color:var(--line)] bg-[color:var(--panel-strong)] px-4 py-3 text-sm text-[color:var(--ink)] outline-none transition duration-300 focus:border-[color:var(--accent)] focus:shadow-[0_0_0_4px_rgba(164,90,61,0.12)]"
           />
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-[color:var(--primary)]">
+          <span className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
             Categoria
           </span>
           <select
             value={selectedCategory}
             onChange={(event) => setSelectedCategory(event.target.value)}
-            className="rounded-full border border-[color:var(--primary)]/25 bg-[color:var(--surface)] px-4 py-3 text-sm text-[color:var(--ink)] outline-none transition focus:border-[color:var(--primary)]"
+            className="rounded-full border border-[color:var(--line)] bg-[color:var(--panel-strong)] px-4 py-3 text-sm text-[color:var(--ink)] outline-none transition duration-300 focus:border-[color:var(--accent)] focus:shadow-[0_0_0_4px_rgba(164,90,61,0.12)]"
           >
             {categories.map((category) => (
               <option key={category} value={category}>
@@ -108,13 +108,13 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-[color:var(--primary)]">
+          <span className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
             Ordenar por
           </span>
           <select
             value={sortBy}
             onChange={(event) => setSortBy(event.target.value as SortOption)}
-            className="rounded-full border border-[color:var(--primary)]/25 bg-[color:var(--surface)] px-4 py-3 text-sm text-[color:var(--ink)] outline-none transition focus:border-[color:var(--primary)]"
+            className="rounded-full border border-[color:var(--line)] bg-[color:var(--panel-strong)] px-4 py-3 text-sm text-[color:var(--ink)] outline-none transition duration-300 focus:border-[color:var(--accent)] focus:shadow-[0_0_0_4px_rgba(164,90,61,0.12)]"
           >
             <option value="nombre-asc">Nombre</option>
             <option value="categoria-asc">Categoria</option>
@@ -124,18 +124,30 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
         </label>
       </section>
 
-      <div className="mt-6 text-sm text-[color:var(--ink)]/75">
-        {filteredProducts.length} producto
-        {filteredProducts.length === 1 ? "" : "s"} encontrado
-        {filteredProducts.length === 1 ? "" : "s"}
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <span className="rounded-full border border-[color:var(--line)] bg-[color:var(--panel-strong)] px-4 py-2 text-sm text-[color:var(--ink)]/78">
+          {filteredProducts.length} producto
+          {filteredProducts.length === 1 ? "" : "s"} encontrado
+          {filteredProducts.length === 1 ? "" : "s"}
+        </span>
+        {selectedCategory !== "Todas" ? (
+          <span className="rounded-full bg-[color:var(--primary)] px-4 py-2 text-sm font-medium text-[color:var(--surface)]">
+            {selectedCategory}
+          </span>
+        ) : null}
+        {search.trim() ? (
+          <span className="rounded-full border border-[color:var(--line)] bg-[color:var(--panel-strong)] px-4 py-2 text-sm text-[color:var(--accent)]">
+            {search}
+          </span>
+        ) : null}
       </div>
 
       {filteredProducts.length === 0 ? (
-        <section className="mt-8 rounded-[1.75rem] border border-dashed border-[color:var(--primary)]/35 bg-white/70 px-6 py-10 text-center">
-          <h2 className="text-2xl font-semibold text-[color:var(--ink)]">
+        <section className="mt-8 rounded-[2rem] border border-dashed border-[color:var(--line-strong)] bg-[color:var(--panel-strong)] px-6 py-12 text-center shadow-[0_10px_30px_rgba(7,7,5,0.04)]">
+          <h2 className="text-2xl font-semibold text-[color:var(--primary)]">
             No encontramos productos
           </h2>
-          <p className="mt-3 text-sm text-[color:var(--ink)]/75">
+          <p className="mt-3 text-sm leading-7 text-[color:var(--ink)]/75">
             Prueba otra categoria, cambia el orden o busca con otro nombre.
           </p>
         </section>
