@@ -1,8 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import {
+  startTransition,
+  useDeferredValue,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ProductCard from "@/components/product-card";
 import type { Product } from "@/lib/products";
 
@@ -18,6 +27,7 @@ type SortOption = "nombre-asc" | "precio-asc" | "precio-desc" | "categoria-asc";
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "57TUNUMERO";
 const CART_STORAGE_KEY = "eliza-cart";
+const AUTO_REFRESH_MS = 30000;
 
 function normalizeText(value: string) {
   return value
@@ -67,6 +77,7 @@ function getCartWhatsappUrl(items: CartItem[], total: number) {
 }
 
 export default function CatalogBrowser({ products }: CatalogBrowserProps) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [sortBy, setSortBy] = useState<SortOption>("nombre-asc");
@@ -75,6 +86,11 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const deferredSearch = useDeferredValue(search);
   const hasMountedRef = useRef(false);
+  const refreshCatalog = useEffectEvent(() => {
+    startTransition(() => {
+      router.refresh();
+    });
+  });
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -102,6 +118,27 @@ export default function CatalogBrowser({ products }: CatalogBrowserProps) {
 
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      if (document.visibilityState === "visible") {
+        refreshCatalog();
+      }
+    }, AUTO_REFRESH_MS);
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        refreshCatalog();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (!selectedProduct && !isCartOpen) {
