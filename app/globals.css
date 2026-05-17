@@ -24,6 +24,10 @@ body {
   font-family: Georgia, "Times New Roman", serif;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -39,6 +43,11 @@ body::before {
 
 * {
   box-sizing: border-box;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 a {
