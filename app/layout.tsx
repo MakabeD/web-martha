@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Catalogo de eliza",
   description: "Catalogo de disponibilidad de productos de eliza.",
-  icons: "/logo.png",
+  icons: "/logo2.jpeg",
   openGraph: {
     title: "Catálogo de Eliza",
     description: "Catálogo de disponibilidad de productos de Eliza.",

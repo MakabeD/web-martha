@@ -8,11 +8,11 @@ export default function Home() {
           Eliza
         </p>
         <h1 className="mt-5 text-4xl font-semibold tracking-[-0.05em] text-[color:var(--primary)] sm:text-6xl lg:text-7xl">
-          Catalogo de eliza
+          Aura Fit
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[color:var(--ink)]/70 sm:text-base lg:text-lg">
-          Una seleccion pensada para explorar prendas, categorias y detalles
-          con una experiencia simple y elegante.
+          Una seleccion pensada para explorar prendas, categorias y detalles con
+          una experiencia simple.
         </p>
         <Link
           href="/catalogo"
